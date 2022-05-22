@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>【BJDCTF-2020-web】Cookie is so subtle! | The DC_comics's World</title><meta name="keywords" content="WEB,模板注入"><meta name="author" content="DC_comics"><meta name="copyright" content="DC_comics"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[TOC] 今天收获比较大的就是这一道模板注入题：cookie is so subtle 我是在ctfhub上寻找关于cookie的题目时发现的，后来发现BUUCTF也有这道题，就复现了一遍。 第一步、审查发现漏洞：主界面是BJDCTF，界面正常，源码检查一下，看了一下cookie也没大问题：  Flag界面提示输入ID（Username）进行提交，  检查源码，也没发现问题，cookie正常：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【BJDCTF-2020-web】Cookie is so subtle!">
+<meta property="og:url" content="http://www.dccomics.top/2021/08/17/%E3%80%90BJDCTF-2020-web%E3%80%91Cookie%20is%20so%20subtle!/index.html">
+<meta property="og:site_name" content="The DC_comics&#39;s World">
+<meta property="og:description" content="[TOC] 今天收获比较大的就是这一道模板注入题：cookie is so subtle 我是在ctfhub上寻找关于cookie的题目时发现的，后来发现BUUCTF也有这道题，就复现了一遍。 第一步、审查发现漏洞：主界面是BJDCTF，界面正常，源码检查一下，看了一下cookie也没大问题：  Flag界面提示输入ID（Username）进行提交，  检查源码，也没发现问题，cookie正常：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg">
+<meta property="article:published_time" content="2021-08-17T02:23:41.000Z">
+<meta property="article:modified_time" content="2022-04-10T16:36:59.910Z">
+<meta property="article:author" content="DC_comics">
+<meta property="article:tag" content="WEB">
+<meta property="article:tag" content="模板注入">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg"><link rel="shortcut icon" href="/img?"><link rel="canonical" href="http://www.dccomics.top/2021/08/17/%E3%80%90BJDCTF-2020-web%E3%80%91Cookie%20is%20so%20subtle!/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【BJDCTF-2020-web】Cookie is so subtle!',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-11 00:36:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s.pc.qq.com/tousu/img/20210616/7147099_1623831911.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">The DC_comics's World</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【BJDCTF-2020-web】Cookie is so subtle!</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-17T02:23:41.000Z" title="发表于 2021-08-17 10:23:41">2021-08-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-10T16:36:59.910Z" title="更新于 2022-04-11 00:36:59">2022-04-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【BJDCTF-2020-web】Cookie is so subtle!"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[TOC]</p>
+<p>今天收获比较大的就是这一道模板注入题：cookie is so subtle</p>
+<p>我是在ctfhub上寻找关于cookie的题目时发现的，后来发现BUUCTF也有这道题，就复现了一遍。</p>
+<h1 id="第一步、审查发现漏洞："><a href="#第一步、审查发现漏洞：" class="headerlink" title="第一步、审查发现漏洞："></a>第一步、审查发现漏洞：</h1><p><strong>主界面</strong>是BJDCTF，界面正常，源码检查一下，看了一下cookie也没大问题：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822102714.png" alt="image-20210822102707008"></p>
+<p><strong>Flag界面</strong>提示输入ID（Username）进行提交，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822102805.png" alt="image-20210822102805846"></p>
+<p>检查源码，也没发现问题，cookie正常：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822113238.png" alt="image-20210822103159775"></p>
+<p>尝试输入一波：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822103355.png" alt="image-20210822103355006"></p>
+<p>发现cookie中多出了一个<strong>user变量</strong>，且输入与回显一致，user这个地方存在问题。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822112756.png" alt="image-20210822103520071"></p>
+<p>最后是Hint界面，页面未见提示，但是在源码中发现</p>
+<p><code>Why not take a closer look at cookies? </code></p>
+<p>更加使我确信cookie中user变量存在问题，并且它对应的界面正是flag.php。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822112810.png" alt="image-20210822104252014"></p>
+<h1 id="第二步、漏洞利用："><a href="#第二步、漏洞利用：" class="headerlink" title="第二步、漏洞利用："></a>第二步、漏洞利用：</h1><p>首先对flag.php界面进行抓包：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822105820.png" alt="image-20210822105820761"></p>
+<p>查询一番过后发现是<strong>模板注入（SSTI）</strong>：</p>
+<p>验证是否为SSTI：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822110506.png" alt="image-20210822110505996"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822110525.png" alt="image-20210822110525146"></p>
+<p>验证通过！！！</p>
+<p>接下来<strong>判断是jinja2模板还是死Twig模板</strong>：（其实在判断为SSTI下的php页面就已经确定其为Twig）</p>
+<p>判断方法：</p>
+<p>如果输入NaN如果 <code>输出7777777 则是jinja2模板</code> <code>如果是 49 则是 twig模板</code></p>
+<p>这里输出了49 则这是 <code>twig模板注入</code>了：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822111456.png" alt="image-20210822111455914"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210822111532.png" alt="image-20210822111532177"></p>
+<p>接下来调用模板payload就可以了：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;&#123;_self.env.registerUndefinedFilterCallback(&quot;exec&quot;)&#125;&#125;&#123;&#123;_self.env.getFilter(&quot;cat /flag&quot;)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="第三步、总结："><a href="#第三步、总结：" class="headerlink" title="第三步、总结："></a>第三步、总结：</h1><p>SSTI问题是服务器端常常面临的一个问题，它主要面临的威胁就是在未过滤下会直接回显引擎得到的解析，在这一点上有点类似SQL注入。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">DC_comics</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.dccomics.top/2021/08/17/%E3%80%90BJDCTF-2020-web%E3%80%91Cookie%20is%20so%20subtle!/">http://www.dccomics.top/2021/08/17/%E3%80%90BJDCTF-2020-web%E3%80%91Cookie%20is%20so%20subtle!/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.dccomics.top" target="_blank">The DC_comics's World</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/WEB/">WEB</a><a class="post-meta__tags" href="/tags/%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/">模板注入</a></div><div class="post_share"><div class="social-share" data-image="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/21/%E3%80%90SSTI%E3%80%91%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E5%9F%BA%E7%A1%80/"><img class="prev-cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【SSTI】模板注入基础</div></div></a></div><div class="next-post pull-right"><a href="/2021/08/16/%E3%80%90aaa%E3%80%91%E3%80%90git%E3%80%91git%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><img class="next-cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【git】git学习笔记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/08/21/【SSTI】模板注入基础/" title="【SSTI】模板注入基础"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-21</div><div class="title">【SSTI】模板注入基础</div></div></a></div><div><a href="/2022/03/25/03251740_test/" title="【Gitee】图床测试"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-25</div><div class="title">【Gitee】图床测试</div></div></a></div><div><a href="/2021/07/28/20211009/" title="【BUUCTF】[极客大挑战 2019]Http"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-28</div><div class="title">【BUUCTF】[极客大挑战 2019]Http</div></div></a></div><div><a href="/2022/03/18/[ACTF2020 新生赛]BackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">【BUUCTF】[ACTF 2020]新生赛 backupfile1</div></div></a></div><div><a href="/2021/10/15/include/" title="【BUUCTF】[ACTF2020 新生赛]Include"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-15</div><div class="title">【BUUCTF】[ACTF2020 新生赛]Include</div></div></a></div><div><a href="/2021/07/31/【AH-training】SSRF/" title="【AH_training】SSRF"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-31</div><div class="title">【AH_training】SSRF</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://s.pc.qq.com/tousu/img/20210616/7147099_1623831911.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">DC_comics</div><div class="author-info__description">Creator && CTFer</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/dc-wh"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E3%80%81%E5%AE%A1%E6%9F%A5%E5%8F%91%E7%8E%B0%E6%BC%8F%E6%B4%9E%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">第一步、审查发现漏洞：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E3%80%81%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">第二步、漏洞利用：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">第三步、总结：</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/year/2022/5/github%E5%9B%BE%E5%BA%8A%E6%8C%82%E6%8E%89%E5%90%8E%E7%9A%84%E5%B0%9D%E8%AF%95/" title="github图床挂掉后的尝试"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="github图床挂掉后的尝试"/></a><div class="content"><a class="title" href="/2022/05/22/year/2022/5/github%E5%9B%BE%E5%BA%8A%E6%8C%82%E6%8E%89%E5%90%8E%E7%9A%84%E5%B0%9D%E8%AF%95/" title="github图床挂掉后的尝试">github图床挂掉后的尝试</a><time datetime="2022-05-22T03:47:01.000Z" title="发表于 2022-05-22 11:47:01">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/a%E6%9C%AA%E5%91%BD%E5%90%8D/" title="无题"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/05/22/a%E6%9C%AA%E5%91%BD%E5%90%8D/" title="无题">无题</a><time datetime="2022-05-22T03:37:10.022Z" title="发表于 2022-05-22 11:37:10">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/25/03251740_test/" title="【Gitee】图床测试"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Gitee】图床测试"/></a><div class="content"><a class="title" href="/2022/03/25/03251740_test/" title="【Gitee】图床测试">【Gitee】图床测试</a><time datetime="2022-03-25T09:41:20.000Z" title="发表于 2022-03-25 17:41:20">2022-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/18/%5BACTF2020%20%E6%96%B0%E7%94%9F%E8%B5%9B%5DBackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【BUUCTF】[ACTF 2020]新生赛 backupfile1"/></a><div class="content"><a class="title" href="/2022/03/18/%5BACTF2020%20%E6%96%B0%E7%94%9F%E8%B5%9B%5DBackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1">【BUUCTF】[ACTF 2020]新生赛 backupfile1</a><time datetime="2022-03-18T02:41:04.000Z" title="发表于 2022-03-18 10:41:04">2022-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/01/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8Epicgo%E5%92%8Ctypora%E6%8A%A5%E9%94%99%E4%BF%AE%E6%94%B9/" title="重装系统后picgo和typora报错修改"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="重装系统后picgo和typora报错修改"/></a><div class="content"><a class="title" href="/2021/12/01/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8Epicgo%E5%92%8Ctypora%E6%8A%A5%E9%94%99%E4%BF%AE%E6%94%B9/" title="重装系统后picgo和typora报错修改">重装系统后picgo和typora报错修改</a><time datetime="2021-12-01T09:53:53.000Z" title="发表于 2021-12-01 17:53:53">2021-12-01</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/829.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By DC_comics</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

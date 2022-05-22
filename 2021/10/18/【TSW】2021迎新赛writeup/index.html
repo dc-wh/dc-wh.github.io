@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>【TSW】2021迎新赛writeup | The DC_comics's World</title><meta name="keywords" content="WEB,TSW"><meta name="author" content="DC_comics"><meta name="copyright" content="DC_comics"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[TOC]  希望我们都能永远记得当下！  签到  直接扫码就可以了。 WEB web0.1  直接修改 X-Forwarded-For: 127.0.0.1 web0.2  可以下载flag.txt，但是打开后并不是。 这道题的考点是可以使用file协议下载文件：  payload: ?file&#x3D;flag.php   打开的源码： &lt;?phpheader(&amp;#x27;Content-Typ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【TSW】2021迎新赛writeup">
+<meta property="og:url" content="http://www.dccomics.top/2021/10/18/%E3%80%90TSW%E3%80%912021%E8%BF%8E%E6%96%B0%E8%B5%9Bwriteup/index.html">
+<meta property="og:site_name" content="The DC_comics&#39;s World">
+<meta property="og:description" content="[TOC]  希望我们都能永远记得当下！  签到  直接扫码就可以了。 WEB web0.1  直接修改 X-Forwarded-For: 127.0.0.1 web0.2  可以下载flag.txt，但是打开后并不是。 这道题的考点是可以使用file协议下载文件：  payload: ?file&#x3D;flag.php   打开的源码： &lt;?phpheader(&amp;#x27;Content-Typ">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg">
+<meta property="article:published_time" content="2021-10-18T14:11:56.000Z">
+<meta property="article:modified_time" content="2022-04-10T16:37:00.956Z">
+<meta property="article:author" content="DC_comics">
+<meta property="article:tag" content="WEB">
+<meta property="article:tag" content="TSW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg"><link rel="shortcut icon" href="/img?"><link rel="canonical" href="http://www.dccomics.top/2021/10/18/%E3%80%90TSW%E3%80%912021%E8%BF%8E%E6%96%B0%E8%B5%9Bwriteup/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【TSW】2021迎新赛writeup',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-11 00:37:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://s.pc.qq.com/tousu/img/20210616/7147099_1623831911.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">The DC_comics's World</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【TSW】2021迎新赛writeup</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-10-18T14:11:56.000Z" title="发表于 2021-10-18 22:11:56">2021-10-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-10T16:37:00.956Z" title="更新于 2022-04-11 00:37:00">2022-04-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【TSW】2021迎新赛writeup"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[TOC]</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211018221452760.png" alt="image-20211018221452760"></p>
+<p><strong>希望我们都能永远记得当下！</strong></p>
+<p><img src="https://i.loli.net/2021/10/20/N1z9bKj3EOl8UGY.png" alt="QQ图片20211020002953.png"></p>
+<h1 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h1><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211019232235842.png" alt="image-20211019232235842"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022123135771.png" alt="image-20211022123135771"></p>
+<p>直接扫码就可以了。</p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022123232476.png" alt="image-20211022123232476"></p>
+<h2 id="web0-1"><a href="#web0-1" class="headerlink" title="web0.1"></a>web0.1</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022123251008.png" alt="image-20211022123251008"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022123316952.png" alt="image-20211022123316952"></p>
+<p>直接修改</p>
+<p><code>X-Forwarded-For: 127.0.0.1</code></p>
+<h2 id="web0-2"><a href="#web0-2" class="headerlink" title="web0.2"></a>web0.2</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022123446206.png" alt="image-20211022123446206"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022123531714.png" alt="image-20211022123531714"></p>
+<p>可以下载flag.txt，但是打开后并不是。</p>
+<p>这道题的考点是可以使用file协议下载文件：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022123648186.png" alt="image-20211022123648186"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">payload: ?file=flag.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022123736543.png" alt="image-20211022123736543"></p>
+<p>打开的源码：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">header(<span class="string">&#x27;Content-Type: text/html; charset=utf-8&#x27;</span>); <span class="comment">//网页编码</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encrypt</span>(<span class="params"><span class="variable">$data</span>, <span class="variable">$key</span></span>) </span>&#123;</span><br><span class="line">	<span class="variable">$key</span> = md5 ( <span class="variable">$key</span> );</span><br><span class="line">	<span class="variable">$x</span> = <span class="number">0</span>;</span><br><span class="line">	<span class="variable">$len</span> = strlen ( <span class="variable">$data</span> );</span><br><span class="line">	<span class="variable">$l</span> = strlen ( <span class="variable">$key</span> );</span><br><span class="line">	<span class="keyword">for</span>(<span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="variable">$len</span>; <span class="variable">$i</span> ++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$x</span> == <span class="variable">$l</span>) &#123;</span><br><span class="line">			<span class="variable">$x</span> = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="variable">$char</span> .= <span class="variable">$key</span> &#123;<span class="variable">$x</span>&#125;;</span><br><span class="line">		<span class="variable">$x</span> ++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="variable">$len</span>; <span class="variable">$i</span> ++) &#123;</span><br><span class="line">		<span class="variable">$str</span> .= chr ( ord ( <span class="variable">$data</span> &#123;<span class="variable">$i</span>&#125; ) + (ord ( <span class="variable">$char</span> &#123;<span class="variable">$i</span>&#125; )) % <span class="number">256</span> );</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> base64_encode ( <span class="variable">$str</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decrypt</span>(<span class="params"><span class="variable">$data</span>, <span class="variable">$key</span></span>) </span>&#123;</span><br><span class="line">	<span class="variable">$key</span> = md5 ( <span class="variable">$key</span> );</span><br><span class="line">	<span class="variable">$x</span> = <span class="number">0</span>;</span><br><span class="line">	<span class="variable">$data</span> = base64_decode ( <span class="variable">$data</span> );</span><br><span class="line">	<span class="variable">$len</span> = strlen ( <span class="variable">$data</span> );</span><br><span class="line">	<span class="variable">$l</span> = strlen ( <span class="variable">$key</span> );</span><br><span class="line">	<span class="keyword">for</span>(<span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="variable">$len</span>; <span class="variable">$i</span> ++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$x</span> == <span class="variable">$l</span>) &#123;</span><br><span class="line">			<span class="variable">$x</span> = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="variable">$char</span> .= substr ( <span class="variable">$key</span>, <span class="variable">$x</span>, <span class="number">1</span> );</span><br><span class="line">		<span class="variable">$x</span> ++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="variable">$len</span>; <span class="variable">$i</span> ++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (ord ( substr ( <span class="variable">$data</span>, <span class="variable">$i</span>, <span class="number">1</span> ) ) &lt; ord ( substr ( <span class="variable">$char</span>, <span class="variable">$i</span>, <span class="number">1</span> ) )) &#123;</span><br><span class="line">			<span class="variable">$str</span> .= chr ( (ord ( substr ( <span class="variable">$data</span>, <span class="variable">$i</span>, <span class="number">1</span> ) ) + <span class="number">256</span>) - ord ( substr ( <span class="variable">$char</span>, <span class="variable">$i</span>, <span class="number">1</span> ) ) );</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="variable">$str</span> .= chr ( ord ( substr ( <span class="variable">$data</span>, <span class="variable">$i</span>, <span class="number">1</span> ) ) - ord ( substr ( <span class="variable">$char</span>, <span class="variable">$i</span>, <span class="number">1</span> ) ) );</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="variable">$str</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$key</span>=<span class="string">&quot;TSW&quot;</span>;</span><br><span class="line"><span class="variable">$data</span>=<span class="string">&quot;l5zCzLDRydSPmtfPlKzNoaGYm6rDzM/Vm9SZqKWZz5iu&quot;</span>;<span class="comment">//encrypt($flag,$key)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>源码的解密程序是对的，但是需要添加执行语句进行回响，得到flag.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">直接添加下列语句至代码尾行，123是测试语句，哈哈哈！</span><br><span class="line">echo decrypt($data,$key);</span><br><span class="line">echo 123;</span><br></pre></td></tr></table></figure>
+
+<p>但是这里需要说一下，执行的echo语句如果在尾行，可以不带分号，但如果在中间一定要带分号。</p>
+<h2 id="web0-3"><a href="#web0-3" class="headerlink" title="web0.3"></a>web0.3</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022124430236.png" alt="image-20211022124430236"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022124505414.png" alt="image-20211022124505414"></p>
+<p>这道题限制就在输出位有位数限制，改下源码就行：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022124611831.png" alt="image-20211022124611831"></p>
+<p>把长度1改大一点就可以了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022124719962.png" alt="image-20211022124719962"></p>
+<h2 id="web0-4"><a href="#web0-4" class="headerlink" title="web0.4"></a>web0.4</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022124752580.png" alt="image-20211022124752580"></p>
+<p>这个题真的有点难，是php中ereg截断绕过：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022124914171.png" alt="image-20211022124914171"></p>
+<p>可以从源码中发现提示flag.php:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022124954096.png" alt="image-20211022124954096"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022125022797.png" alt="image-20211022125022797"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">﻿<span class="meta">&lt;?php</span></span><br><span class="line">header ( <span class="string">&#x27;Content-Type: text/html; charset=utf-8&#x27;</span> ); <span class="comment">// 网页编码</span></span><br><span class="line">error_reporting ( <span class="number">0</span> );</span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"><span class="variable">$flag</span> = <span class="string">&quot;flag&#123;xxxxxxxxxxxxxx&#125;&quot;</span>;</span><br><span class="line"><span class="comment">//echo $_POST[&#x27;num&#x27;];</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span> ( <span class="variable">$_POST</span> [<span class="string">&#x27;num&#x27;</span>] )) &#123;</span><br><span class="line">    <span class="keyword">if</span> (@ereg ( <span class="string">&quot;^[1-9]+$&quot;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;num&#x27;</span>] ) === <span class="literal">FALSE</span>)</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;说好的数字呢？&#x27;</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (strpos ( <span class="variable">$_POST</span>[<span class="string">&#x27;num&#x27;</span>], <span class="string">&#x27;#testaasafd&#x27;</span> ) !== <span class="literal">FALSE</span>)</span><br><span class="line">        <span class="keyword">die</span> ( <span class="string">&#x27;Flag: &#x27;</span> . <span class="variable">$flag</span> );</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;你的数字不太符合我的心意哦！&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;猜密码&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body style=<span class="string">&quot;text-align: center&quot;</span>&gt;</span><br><span class="line">&lt;center&gt;</span><br><span class="line">&lt;img src=<span class="string">&quot;1.gif&quot;</span>/&gt;</span><br><span class="line">    &lt;form action=<span class="string">&quot;index.php&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;num&quot;</span> /&gt; &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;提交&quot;</span> /&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">&lt;/center&gt;</span><br><span class="line">    &lt;!-- flag.php  --&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>重点关注这里：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022125135004.png" alt="image-20211022125135004"></p>
+<p>首先得存在一个POST方法传参的num变量，然后使用截断绕过ereg函数，接着字符串中得有#testaasafd就可以到达die()方法获得flag。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">POST：</span><br><span class="line">num=2%00#testaasafd</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022125620304.png" alt="image-20211022125620304"></p>
+<p>但是没有看到flag,这是因为需要在web4默认网页下进行POST传参：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022125931235.png" alt="image-20211022125931235"></p>
+<h2 id="web3"><a href="#web3" class="headerlink" title="web3"></a>web3</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022130004628.png" alt="image-20211022130004628"></p>
+<p>这道题一定不要想复杂，直接SQL注入万能密码就行！</p>
+<p>不过username和password都需要注入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022130139516.png" alt="image-20211022130139516"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022130229556.png" alt="image-20211022130229556"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022130212746.png" alt="image-20211022130212746"></p>
+<h2 id="web1"><a href="#web1" class="headerlink" title="web1"></a>web1</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022130300175.png" alt="image-20211022130300175"></p>
+<p>这个也是php代码审计，但是有个问题，一定不能改下载的文件名：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;try Anonymous and Password&lt;br&gt;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//echo $_SERVER[&#x27;PHP_SELF&#x27;].&quot;&lt;br&gt;&quot;; </span></span><br><span class="line"><span class="comment">//echo $_SERVER[&quot;QUERY_STRING&quot;].&quot;&lt;br&gt;&quot;;</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$_SERVER</span>[<span class="string">&quot;REQUEST_URI&quot;</span>].<span class="string">&quot;&lt;br&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$username</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;username&#x27;</span>];</span><br><span class="line"><span class="variable">$password</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$username</span>) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$password</span>) )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(md5(<span class="variable">$username</span>)==<span class="string">&quot;7079c72c21415131774625ba1d64f4b0&quot;</span> &amp;&amp; md5(<span class="variable">$password</span>) == <span class="string">&#x27;dc647eb65e6711e155375218212b3964&#x27;</span> )</span><br><span class="line">    &#123; </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;Congratulations!ctf flag:&#x27;</span>.md5(<span class="variable">$_SERVER</span>[<span class="string">&quot;REQUEST_URI&quot;</span>]); </span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable">$username</span>==<span class="string">&quot;anonimous&quot;</span>)&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&#x27;flag lost&#x27;</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable">$password</span> == <span class="string">&#x27;password&#x27;</span>)&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&#x27;flag lost&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123; </span><br><span class="line">		<span class="keyword">echo</span> <span class="string">&#x27;flag lost&#x27;</span>;</span><br><span class="line">	&#125; </span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">&#x27;flag lost&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">    </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">payload:</span><br><span class="line">?username=Anonimous&amp;&amp;password=Passowrd</span><br></pre></td></tr></table></figure>
+
+<p>这道题出的有点问题，因为&amp;&amp;和&amp;的不同导致结果也不一样，存在非预期解。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022130724758.png" alt="image-20211022130724758"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022130902108.png" alt="image-20211022130902108"></p>
+<p>尝试提交一下就好了。</p>
+<h2 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022131016730.png" alt="image-20211022131016730"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>]) <span class="keyword">and</span> <span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>])) </span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>] == <span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>])&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;Your password can not be your name!&lt;/p&gt;&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (sha1(<span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>]) === sha1(<span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>]))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="variable">$namearr</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;name&#x27;</span>];</span><br><span class="line">		<span class="variable">$passwdarr</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;password&#x27;</span>];</span><br><span class="line">		<span class="keyword">if</span>((<span class="variable">$namearr</span>[<span class="number">0</span>] == <span class="number">1</span>) &amp;&amp; (<span class="variable">$passwdarr</span>[<span class="number">0</span>] == <span class="number">2</span>))&#123;</span><br><span class="line">			<span class="variable">$flag</span> = <span class="string">&quot;&#123;&quot;</span>.<span class="variable">$_SERVER</span>[<span class="string">&quot;REQUEST_URI&quot;</span>].<span class="string">&quot;&#125;&quot;</span>;</span><br><span class="line">			</span><br><span class="line">			<span class="keyword">echo</span> <span class="string">&#x27;&#x27;</span>.md5(<span class="variable">$flag</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="variable">$flag</span> = <span class="string">&#x27;error&#x27;</span>;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">&#x27;Flag: &#x27;</span>.<span class="variable">$flag</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">      </span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;Invalid password.&lt;/p&gt;&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;&lt;p&gt;Login first!&lt;/p&gt;&#x27;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这道题和上一题一样，因为是自己配php环境，导致存在非预期解。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?name[]=1&amp;&amp;password[]=2</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022132851047.png" alt="image-20211022132851047"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">?name[0]=1&amp;&amp;password[0]=2</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211022133213504.png" alt="image-20211022133213504"></p>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023105138874.png" alt="image-20211023105138874"></p>
+<h2 id="老色逼"><a href="#老色逼" class="headerlink" title="老色逼"></a>老色逼</h2><p>熟悉的中国矿业大学图</p>
+<p>直接使用stegsolve进行色块分析，在red,green,blue中发现顶部有黑色图层：</p>
+<p>Analyse—&gt;Data Extract</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023105043283.png" alt="image-20211023105043283"></p>
+<p>保存下来时一张二维码，奈斯，一扫就是flag。</p>
+<h2 id="黑客流量包"><a href="#黑客流量包" class="headerlink" title="黑客流量包"></a>黑客流量包</h2><p>开局流量分析，wireshark上：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023105355618.png" alt="image-20211023105355618"></p>
+<p>以字符串为关键字索引flag：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023105543497.png" alt="image-20211023105543497"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023105527268.png" alt="image-20211023105527268"></p>
+<p>password就是flag</p>
+<h2 id="misc1"><a href="#misc1" class="headerlink" title="misc1"></a>misc1</h2><p>是二进制转为ascii码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">11001100110110001100001011001110111101100110000001100010011000001101001011100110110011101101111011011110110010001111101</span><br></pre></td></tr></table></figure>
+
+<p>但由于空格没有，使用某些工具可能跑不出来，所以可以采取截断的方式进行转化：</p>
+<p>这道题就是工具的问题：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023112113541.png" alt="image-20211023112113541"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023112041390.png" alt="image-20211023112041390"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">11001100110110001100001011001110111101100110000001100010011000001101001011100110110011101101111011011110110010001111101		</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">666c61677b3031306973676f6f647d </span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flag&#123;010isgood&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="misc2"><a href="#misc2" class="headerlink" title="misc2"></a>misc2</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023113947840.png" alt="image-20211023113947840"></p>
+<p>直接熊曰</p>
+<h2 id="悟空"><a href="#悟空" class="headerlink" title="悟空"></a>悟空</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023114023071.png" alt="image-20211023114023071"></p>
+<p>直接佛曰</p>
+<h2 id="曲折的人生"><a href="#曲折的人生" class="headerlink" title="曲折的人生"></a>曲折的人生</h2><p>这道题是压缩包嵌套问题：</p>
+<h1 id="CRYPTO"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h1><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023101116168.png" alt="image-20211023101116168"></p>
+<h2 id="猪圈里有小猪"><a href="#猪圈里有小猪" class="headerlink" title="猪圈里有小猪"></a>猪圈里有小猪</h2><p>很明显的猪圈密码：</p>
+<p>在首部加上前缀</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">data:image/jpg;base64/</span><br></pre></td></tr></table></figure>
+
+<p>再将其base64转为图片对照猪圈密码就可以</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023101904361.png" alt="image-20211023101904361"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023101920732.png" alt="image-20211023101920732"></p>
+<h2 id="Crypro2"><a href="#Crypro2" class="headerlink" title="Crypro2"></a>Crypro2</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023101956154.png" alt="image-20211023101956154"></p>
+<p>这道题是用python脚本解密或者直接凯撒解密：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">##from flag import FLAG</span></span><br><span class="line">plaintext=<span class="string">&#x27;Qwlr&#123;EdH1DEs1M1de&#125;&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt</span>(<span class="params">plaintext</span>):</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">26</span>):</span><br><span class="line">        str_list = <span class="built_in">list</span>(plaintext)</span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i &lt;<span class="built_in">len</span>(plaintext):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> str_list[i].isalpha():</span><br><span class="line">                str_list[i] = str_list[i]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                a = <span class="string">&quot;A&quot;</span> <span class="keyword">if</span> str_list[i].isupper() <span class="keyword">else</span> <span class="string">&quot;a&quot;</span></span><br><span class="line">                str_list[i] = <span class="built_in">chr</span>((<span class="built_in">ord</span>(str_list[i]) - <span class="built_in">ord</span>(a) + j) % <span class="number">26</span> + <span class="built_in">ord</span>(a))</span><br><span class="line">            i = i + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;&#x27;</span>.join(str_list))</span><br><span class="line">encrypt(Qwlr&#123;EdH1DEs1M1de&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">##if __name__ == &#x27;__main__&#x27;:</span></span><br><span class="line"><span class="comment">##    plaintext = FLAG</span></span><br><span class="line"><span class="comment">##    encrypt(plaintext)</span></span><br><span class="line"><span class="comment">##    </span></span><br><span class="line">    </span><br><span class="line">   </span><br><span class="line"><span class="comment">#Print Qwlr&#123;EdH1DEs1M1de&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="crypto1"><a href="#crypto1" class="headerlink" title="crypto1"></a>crypto1</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023102138176.png" alt="image-20211023102138176"></p>
+<p>直接用银河密码就可以：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023102252526.png" alt="image-20211023102252526"></p>
+<h2 id="诡异的编码"><a href="#诡异的编码" class="headerlink" title="诡异的编码"></a>诡异的编码</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023102315743.png" alt="image-20211023102315743"></p>
+<p>前半段是ook，后半段是brainfuck</p>
+<p><a target="_blank" rel="noopener" href="https://www.splitbrain.org/services/ook">解密链接</a></p>
+<h2 id="010"><a href="#010" class="headerlink" title="010"></a>010</h2><p>二进制转ascii码文本：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023102706219.png" alt="image-20211023102706219"></p>
+<p>链接：<a target="_blank" rel="noopener" href="http://www.ab126.com/goju/1711.html">http://www.ab126.com/goju/1711.html</a></p>
+<h2 id="hex"><a href="#hex" class="headerlink" title="hex"></a>hex</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023102742679.png" alt="image-20211023102742679"></p>
+<p>十六进制转文本</p>
+<h2 id="莫斯"><a href="#莫斯" class="headerlink" title="莫斯"></a>莫斯</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">..-./.-../.-/--./----.--/-../...--/..-./-.-./-.../..-./.----/--.../..-./----./...--/----./----./...../-----/....-/-----.-</span><br></pre></td></tr></table></figure>
+
+<p>莫斯电码直接转换就可以</p>
+<h2 id="真正的贝斯"><a href="#真正的贝斯" class="headerlink" title="真正的贝斯"></a>真正的贝斯</h2><p>直接复制文本到浏览器url框。base64转图片就可以</p>
+<h2 id="真正的真正的贝斯"><a href="#真正的真正的贝斯" class="headerlink" title="真正的真正的贝斯"></a>真正的真正的贝斯</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023103042016.png" alt="image-20211023103042016"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@iH&lt;,&#123;bdR2H;i6*Tm,Wx2izpx2!</span><br></pre></td></tr></table></figure>
+
+<p>base91</p>
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023103128303.png" alt="image-20211023103128303"></p>
+<p>链接：</p>
+<p><a target="_blank" rel="noopener" href="http://www.atoolbox.net/Tool.php?Id=935">www.atoolbox.net/Tool.php?Id=935</a></p>
+<h2 id="培根"><a href="#培根" class="headerlink" title="培根"></a>培根</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023103325482.png" alt="image-20211023103325482"></p>
+<p>链接：</p>
+<p><a target="_blank" rel="noopener" href="http://rumkin.com/tools/cipher/baconian.php">http://rumkin.com/tools/cipher/baconian.php</a></p>
+<h2 id="凯撒"><a href="#凯撒" class="headerlink" title="凯撒"></a>凯撒</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023103513710.png" alt="image-20211023103513710"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">iodj&#123;fdvhu_lv_hdvb&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023103558667.png" alt="image-20211023103558667"></p>
+<h2 id="熟悉的编码"><a href="#熟悉的编码" class="headerlink" title="熟悉的编码"></a>熟悉的编码</h2><p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023103735885.png" alt="image-20211023103735885"></p>
+<p>url解密：</p>
+<p><a target="_blank" rel="noopener" href="http://tool.chinaz.com/tools/urlencode.aspx">http://tool.chinaz.com/tools/urlencode.aspx</a></p>
+<h2 id="表情"><a href="#表情" class="headerlink" title="表情"></a>表情</h2><p>这个表情可以直接在控制台输入，会回响结果的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ﾟωﾟﾉ= /｀ｍ´）ﾉ ~┻━┻   //*´∇｀*/ [&#x27;_&#x27;]; o=(ﾟｰﾟ)  =_=3; c=(ﾟΘﾟ) =(ﾟｰﾟ)-(ﾟｰﾟ); (ﾟДﾟ) =(ﾟΘﾟ)= (o^_^o)/ (o^_^o);(ﾟДﾟ)=&#123;ﾟΘﾟ: &#x27;_&#x27; ,ﾟωﾟﾉ : ((ﾟωﾟﾉ==3) +&#x27;_&#x27;) [ﾟΘﾟ] ,ﾟｰﾟﾉ :(ﾟωﾟﾉ+ &#x27;_&#x27;)[o^_^o -(ﾟΘﾟ)] ,ﾟДﾟﾉ:((ﾟｰﾟ==3) +&#x27;_&#x27;)[ﾟｰﾟ] &#125;; (ﾟДﾟ) [ﾟΘﾟ] =((ﾟωﾟﾉ==3) +&#x27;_&#x27;) [c^_^o];(ﾟДﾟ) [&#x27;c&#x27;] = ((ﾟДﾟ)+&#x27;_&#x27;) [ (ﾟｰﾟ)+(ﾟｰﾟ)-(ﾟΘﾟ) ];(ﾟДﾟ) [&#x27;o&#x27;] = ((ﾟДﾟ)+&#x27;_&#x27;) [ﾟΘﾟ];(ﾟoﾟ)=(ﾟДﾟ) [&#x27;c&#x27;]+(ﾟДﾟ) [&#x27;o&#x27;]+(ﾟωﾟﾉ +&#x27;_&#x27;)[ﾟΘﾟ]+ ((ﾟωﾟﾉ==3) +&#x27;_&#x27;) [ﾟｰﾟ] + ((ﾟДﾟ) +&#x27;_&#x27;) [(ﾟｰﾟ)+(ﾟｰﾟ)]+ ((ﾟｰﾟ==3) +&#x27;_&#x27;) [ﾟΘﾟ]+((ﾟｰﾟ==3) +&#x27;_&#x27;) [(ﾟｰﾟ) - (ﾟΘﾟ)]+(ﾟДﾟ) [&#x27;c&#x27;]+((ﾟДﾟ)+&#x27;_&#x27;) [(ﾟｰﾟ)+(ﾟｰﾟ)]+ (ﾟДﾟ) [&#x27;o&#x27;]+((ﾟｰﾟ==3) +&#x27;_&#x27;) [ﾟΘﾟ];(ﾟДﾟ) [&#x27;_&#x27;] =(o^_^o) [ﾟoﾟ] [ﾟoﾟ];(ﾟεﾟ)=((ﾟｰﾟ==3) +&#x27;_&#x27;) [ﾟΘﾟ]+ (ﾟДﾟ) .ﾟДﾟﾉ+((ﾟДﾟ)+&#x27;_&#x27;) [(ﾟｰﾟ) + (ﾟｰﾟ)]+((ﾟｰﾟ==3) +&#x27;_&#x27;) [o^_^o -ﾟΘﾟ]+((ﾟｰﾟ==3) +&#x27;_&#x27;) [ﾟΘﾟ]+ (ﾟωﾟﾉ +&#x27;_&#x27;) [ﾟΘﾟ]; (ﾟｰﾟ)+=(ﾟΘﾟ); (ﾟДﾟ)[ﾟεﾟ]=&#x27;\\&#x27;; (ﾟДﾟ).ﾟΘﾟﾉ=(ﾟДﾟ+ ﾟｰﾟ)[o^_^o -(ﾟΘﾟ)];(oﾟｰﾟo)=(ﾟωﾟﾉ +&#x27;_&#x27;)[c^_^o];(ﾟДﾟ) [ﾟoﾟ]=&#x27;\&quot;&#x27;;(ﾟДﾟ) [&#x27;_&#x27;] ( (ﾟДﾟ) [&#x27;_&#x27;] (ﾟεﾟ+(ﾟДﾟ)[ﾟoﾟ]+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((o^_^o) +(o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (o^_^o))+ (o^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ ((ﾟｰﾟ) + (o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ ((ﾟｰﾟ) + (o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ ((ﾟｰﾟ) + (o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ ((ﾟｰﾟ) + (o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (o^_^o))+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟoﾟ]) (ﾟΘﾟ)) (&#x27;_&#x27;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://cdn.jsdelivr.net/gh/dc-wh/gitee-image/image-20211023104348191.png" alt="image-20211023104348191"></p>
+<h2 id="贝斯"><a href="#贝斯" class="headerlink" title="贝斯"></a>贝斯</h2><p>直接base64解码就可以。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">DC_comics</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.dccomics.top/2021/10/18/%E3%80%90TSW%E3%80%912021%E8%BF%8E%E6%96%B0%E8%B5%9Bwriteup/">http://www.dccomics.top/2021/10/18/%E3%80%90TSW%E3%80%912021%E8%BF%8E%E6%96%B0%E8%B5%9Bwriteup/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.dccomics.top" target="_blank">The DC_comics's World</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/WEB/">WEB</a><a class="post-meta__tags" href="/tags/TSW/">TSW</a></div><div class="post_share"><div class="social-share" data-image="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/10/22/%E3%80%90NSSCTF%E3%80%912021SWPU-crypto/"><img class="prev-cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【NSSCTF】2021SWPU-crypto</div></div></a></div><div class="next-post pull-right"><a href="/2021/10/15/include/"><img class="next-cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【BUUCTF】[ACTF2020 新生赛]Include</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/25/03251740_test/" title="【Gitee】图床测试"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-25</div><div class="title">【Gitee】图床测试</div></div></a></div><div><a href="/2021/07/28/20211009/" title="【BUUCTF】[极客大挑战 2019]Http"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-28</div><div class="title">【BUUCTF】[极客大挑战 2019]Http</div></div></a></div><div><a href="/2022/03/18/[ACTF2020 新生赛]BackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">【BUUCTF】[ACTF 2020]新生赛 backupfile1</div></div></a></div><div><a href="/2021/10/15/include/" title="【BUUCTF】[ACTF2020 新生赛]Include"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-15</div><div class="title">【BUUCTF】[ACTF2020 新生赛]Include</div></div></a></div><div><a href="/2021/07/31/【AH-training】SSRF/" title="【AH_training】SSRF"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-31</div><div class="title">【AH_training】SSRF</div></div></a></div><div><a href="/2021/07/28/【AH-training】PHP反序列化/" title="【AH_training】PHP反序列化"><img class="cover" src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-28</div><div class="title">【AH_training】PHP反序列化</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://s.pc.qq.com/tousu/img/20210616/7147099_1623831911.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">DC_comics</div><div class="author-info__description">Creator && CTFer</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">57</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/dc-wh"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AD%BE%E5%88%B0"><span class="toc-number">1.</span> <span class="toc-text">签到</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WEB"><span class="toc-number">2.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#web0-1"><span class="toc-number">2.1.</span> <span class="toc-text">web0.1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web0-2"><span class="toc-number">2.2.</span> <span class="toc-text">web0.2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web0-3"><span class="toc-number">2.3.</span> <span class="toc-text">web0.3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web0-4"><span class="toc-number">2.4.</span> <span class="toc-text">web0.4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web3"><span class="toc-number">2.5.</span> <span class="toc-text">web3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web1"><span class="toc-number">2.6.</span> <span class="toc-text">web1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web2"><span class="toc-number">2.7.</span> <span class="toc-text">web2</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MISC"><span class="toc-number">3.</span> <span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%81%E8%89%B2%E9%80%BC"><span class="toc-number">3.1.</span> <span class="toc-text">老色逼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E5%AE%A2%E6%B5%81%E9%87%8F%E5%8C%85"><span class="toc-number">3.2.</span> <span class="toc-text">黑客流量包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#misc1"><span class="toc-number">3.3.</span> <span class="toc-text">misc1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#misc2"><span class="toc-number">3.4.</span> <span class="toc-text">misc2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%82%9F%E7%A9%BA"><span class="toc-number">3.5.</span> <span class="toc-text">悟空</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B2%E6%8A%98%E7%9A%84%E4%BA%BA%E7%94%9F"><span class="toc-number">3.6.</span> <span class="toc-text">曲折的人生</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CRYPTO"><span class="toc-number">4.</span> <span class="toc-text">CRYPTO</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8C%AA%E5%9C%88%E9%87%8C%E6%9C%89%E5%B0%8F%E7%8C%AA"><span class="toc-number">4.1.</span> <span class="toc-text">猪圈里有小猪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Crypro2"><span class="toc-number">4.2.</span> <span class="toc-text">Crypro2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#crypto1"><span class="toc-number">4.3.</span> <span class="toc-text">crypto1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%A1%E5%BC%82%E7%9A%84%E7%BC%96%E7%A0%81"><span class="toc-number">4.4.</span> <span class="toc-text">诡异的编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#010"><span class="toc-number">4.5.</span> <span class="toc-text">010</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hex"><span class="toc-number">4.6.</span> <span class="toc-text">hex</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%AB%E6%96%AF"><span class="toc-number">4.7.</span> <span class="toc-text">莫斯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%9F%E6%AD%A3%E7%9A%84%E8%B4%9D%E6%96%AF"><span class="toc-number">4.8.</span> <span class="toc-text">真正的贝斯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9C%9F%E6%AD%A3%E7%9A%84%E7%9C%9F%E6%AD%A3%E7%9A%84%E8%B4%9D%E6%96%AF"><span class="toc-number">4.9.</span> <span class="toc-text">真正的真正的贝斯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%B9%E6%A0%B9"><span class="toc-number">4.10.</span> <span class="toc-text">培根</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%AF%E6%92%92"><span class="toc-number">4.11.</span> <span class="toc-text">凯撒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%86%9F%E6%82%89%E7%9A%84%E7%BC%96%E7%A0%81"><span class="toc-number">4.12.</span> <span class="toc-text">熟悉的编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E6%83%85"><span class="toc-number">4.13.</span> <span class="toc-text">表情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%9D%E6%96%AF"><span class="toc-number">4.14.</span> <span class="toc-text">贝斯</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/year/2022/5/github%E5%9B%BE%E5%BA%8A%E6%8C%82%E6%8E%89%E5%90%8E%E7%9A%84%E5%B0%9D%E8%AF%95/" title="github图床挂掉后的尝试"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="github图床挂掉后的尝试"/></a><div class="content"><a class="title" href="/2022/05/22/year/2022/5/github%E5%9B%BE%E5%BA%8A%E6%8C%82%E6%8E%89%E5%90%8E%E7%9A%84%E5%B0%9D%E8%AF%95/" title="github图床挂掉后的尝试">github图床挂掉后的尝试</a><time datetime="2022-05-22T03:47:01.000Z" title="发表于 2022-05-22 11:47:01">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/a%E6%9C%AA%E5%91%BD%E5%90%8D/" title="无题"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2022/05/22/a%E6%9C%AA%E5%91%BD%E5%90%8D/" title="无题">无题</a><time datetime="2022-05-22T03:37:10.022Z" title="发表于 2022-05-22 11:37:10">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/25/03251740_test/" title="【Gitee】图床测试"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Gitee】图床测试"/></a><div class="content"><a class="title" href="/2022/03/25/03251740_test/" title="【Gitee】图床测试">【Gitee】图床测试</a><time datetime="2022-03-25T09:41:20.000Z" title="发表于 2022-03-25 17:41:20">2022-03-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/18/%5BACTF2020%20%E6%96%B0%E7%94%9F%E8%B5%9B%5DBackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【BUUCTF】[ACTF 2020]新生赛 backupfile1"/></a><div class="content"><a class="title" href="/2022/03/18/%5BACTF2020%20%E6%96%B0%E7%94%9F%E8%B5%9B%5DBackupFile1/" title="【BUUCTF】[ACTF 2020]新生赛 backupfile1">【BUUCTF】[ACTF 2020]新生赛 backupfile1</a><time datetime="2022-03-18T02:41:04.000Z" title="发表于 2022-03-18 10:41:04">2022-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/01/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8Epicgo%E5%92%8Ctypora%E6%8A%A5%E9%94%99%E4%BF%AE%E6%94%B9/" title="重装系统后picgo和typora报错修改"><img src="https://s.pc.qq.com/tousu/img/20210618/1810122_1623973655.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="重装系统后picgo和typora报错修改"/></a><div class="content"><a class="title" href="/2021/12/01/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8Epicgo%E5%92%8Ctypora%E6%8A%A5%E9%94%99%E4%BF%AE%E6%94%B9/" title="重装系统后picgo和typora报错修改">重装系统后picgo和typora报错修改</a><time datetime="2021-12-01T09:53:53.000Z" title="发表于 2021-12-01 17:53:53">2021-12-01</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/829.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By DC_comics</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
